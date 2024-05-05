@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { VscThreeBars } from "react-icons/vsc";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../Provider/Provider";
 import logo from "../../assets/logo.svg";
 const Navbar = () => {
   const [sideOpen, setSideOpen] = useState(true);
+  const { user, logOutUser } = useContext(AuthContext);
+  const handleLogOut = () => {
+    logOutUser();
+  };
   return (
     <div className="max-w-[1920px] mx-auto rale-way">
       <header className="bg-white shadow-lg  flex w-full z-50  px-5 md:px-[50px] lg:px-[80px] xl:px-[120px] 2xl:px-[150px]">
@@ -35,34 +40,53 @@ const Navbar = () => {
                 <span>Home</span>
               </NavLink>
             </li>
+
             <li>
               <NavLink
-                to="/add-coffee"
+                to="/order-details"
                 className={({ isActive, isPending }) =>
                   isPending
                     ? "pending"
                     : isActive
-                    ? "text-[]#FF3811 border-b-4 border-[#291410]"
-                    : "hover:text-[]#FF3811"
-                }
-              >
-                <span>Add Product</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/My Cart"
-                className={({ isActive, isPending }) =>
-                  isPending
-                    ? "pending"
-                    : isActive
-                    ? "text-[#FF3811] border-b-4 border-[#FF3811]"
+                    ? "text-[#FF3811] text-bold border-b-4 border-[#FF3811]"
                     : "hover:text-[#FF3811]"
                 }
               >
-                <span>My Cart</span>
+                <span>Booking Details</span>
               </NavLink>
             </li>
+
+            {user ? (
+              <li>
+                <NavLink
+                  onClick={handleLogOut}
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "text-[#FF3811] border-b-4 border-[#FF3811]"
+                      : "hover:text-[#FF3811]"
+                  }
+                >
+                  <span>Logout</span>
+                </NavLink>
+              </li>
+            ) : (
+              <li>
+                <NavLink
+                  to="/login"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "text-[#FF3811] border-b-4 border-[#FF3811]"
+                      : "hover:text-[#FF3811]"
+                  }
+                >
+                  <span>Login</span>
+                </NavLink>
+              </li>
+            )}
           </ul>
         </nav>
         {/* end */}
@@ -132,7 +156,7 @@ const Navbar = () => {
       <div
         className={`absolute ${
           sideOpen ? "hidden" : "block"
-        }  bg-white shadow-lg md:hidden mt-12 w-56 min-h-screen overflow-y-auto top-0 -left-5 ease-in-out duration-30  dark:bg-white dark:text-white -z-10`}
+        }  bg-white shadow-lg md:hidden mt-14 w-56 min-h-screen overflow-y-auto top-0 -left-5 ease-in-out duration-30  dark:bg-white dark:text-white z-10`}
       >
         <div className="p-4">
           <ul className="mt-6 flex flex-col gap-4 ml-5">
