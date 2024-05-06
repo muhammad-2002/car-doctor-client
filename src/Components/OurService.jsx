@@ -1,26 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ServicesCard from "../Components/ServicesCard";
 import CommonHeading from "../Shared/CommonHeading/CommonHeading";
+import { useServices } from "../custom-hook/Auth";
 
 const OurService = () => {
   const heading = "Our Service Area";
+
   const paragraph =
     "Our car-doctor services extend across Agorgon,dhaka, mirpur,dhaka, and sever dhaka, ensuring your vehicle receives expert care wherever you roam. From urban streets to suburban lanes, we're there for you.";
 
-  const [services, setServices] = useState([]);
-  console.log(services);
-
   // useEffect(() => {
   //   axios
-  //     .get("http://localhost:5000/services")
+  //     .get("https://car-doceor.vercel.app/services")
   //     .then((data) => setServices(data?.data));
   // }, []);
+  const services = useServices("services");
 
-  useEffect(() => {
-    fetch("http://localhost:5000/services")
-      .then((res) => res.json())
-      .then((data) => setServices(data));
-  }, []);
   return (
     <div>
       <div>

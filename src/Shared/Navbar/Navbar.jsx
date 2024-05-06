@@ -41,20 +41,22 @@ const Navbar = () => {
               </NavLink>
             </li>
 
-            <li>
-              <NavLink
-                to="/order-details"
-                className={({ isActive, isPending }) =>
-                  isPending
-                    ? "pending"
-                    : isActive
-                    ? "text-[#FF3811] text-bold border-b-4 border-[#FF3811]"
-                    : "hover:text-[#FF3811]"
-                }
-              >
-                <span>Booking Details</span>
-              </NavLink>
-            </li>
+            {user && (
+              <li>
+                <NavLink
+                  to="/order-details"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "text-[#FF3811] text-bold border-b-4 border-[#FF3811]"
+                      : "hover:text-[#FF3811]"
+                  }
+                >
+                  <span>Booking Details</span>
+                </NavLink>
+              </li>
+            )}
 
             {user ? (
               <li>
@@ -68,7 +70,7 @@ const Navbar = () => {
                       : "hover:text-[#FF3811]"
                   }
                 >
-                  <span>Logout</span>
+                  <span>LogOut</span>
                 </NavLink>
               </li>
             ) : (

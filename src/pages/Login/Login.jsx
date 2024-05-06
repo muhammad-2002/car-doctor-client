@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import frame from "../../../public/Frame (1).png";
@@ -7,7 +6,7 @@ const Login = () => {
   const { signUpForEmailAndPass } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location);
+
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -15,20 +14,10 @@ const Login = () => {
     const password = form.password.value;
     const user = { email };
     signUpForEmailAndPass(email, password)
-      .then((result) => {
-        console.log(result);
-
-        axios
-          .post("http://localhost:5000/jwt", user, { withCredentials: true })
-          .then((req, res) => {
-            if (req.data?.status) {
-              navigate(location?.state ? location.state : "/");
-            }
-          });
-
-        // ;
+      .then(() => {
+        // console.log(result);
       })
-      .catch((err) => console.log(err));
+      .catch();
   };
   return (
     <div>

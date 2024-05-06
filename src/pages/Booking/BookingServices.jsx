@@ -7,7 +7,7 @@ const BookingServices = () => {
   const { user } = useContext(AuthContext);
   const loderDta = useLoaderData();
   const { title, price, image } = loderDta;
-  console.log(title, price);
+  // console.log(title, price);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -21,10 +21,7 @@ const BookingServices = () => {
       image,
       title,
     };
-    axios
-      .post(`http://localhost:5000/booking`, result)
-      .then((result) => console.log(result.data))
-      .catch((err) => console.log(err));
+    axios.post(`https://car-doceor.vercel.app/booking`, result).then().catch();
   };
 
   return (

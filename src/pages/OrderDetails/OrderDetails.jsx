@@ -1,32 +1,31 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+
+import UseAxiosSecure from "../../custom-hook/UseAxiosSecure";
 import { AuthContext } from "../../Provider/Provider";
 
 const OrderDetails = () => {
   const { user } = useContext(AuthContext);
   const [services, setServices] = useState([]);
-  console.log(services);
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/booking?email=${user.email}`, {
-        withCredentials: true,
-      })
-      .then((response) => setServices(response?.data));
+    const url = `/booking?email=${user.email}`;
+    const axiosSecure = UseAxiosSecure();
+    axiosSecure.get(url).then((res) => setServices(res?.data));
   }, [user?.email]);
 
   const handleDelete = (id) => {
     const remaining = services.filter((s) => s._id !== id);
-    axios.delete(`http://localhost:5000/booking/${id}`).then((response) => {
+    axios.delete(`https://car-doceor.vercel.app/booking/${id}`).then(() => {
       setServices(remaining);
     });
   };
   const handleUpdate = (id) => {
     // axios
-    //   .patch(`http://localhost:5000/booking/${id}`, { status: "confirm" })
+    //   .patch(`https://car-doceor.vercel.app/booking/${id}`, { status: "confirm" })
     //   .then((response) => console.log(response.data))
     //   .catch((error) => console.error("Error updating booking:", error));
 
-    fetch(`http://localhost:5000/booking/${id}`, {
+    fetch(`https://car-doceor.vercel.app/booking/${id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
@@ -35,17 +34,17 @@ const OrderDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.modifiedCount > 0) {
           const remaining = services.filter((s) => s._id !== id);
           const upadted = services.find((s) => s._id === id);
-          console.log(upadted);
+          // console.log(upadted);
           upadted.status = "conform";
           const newbooking = [upadted, ...remaining];
           setServices(newbooking);
         }
       })
-      .catch((err) => console.log(err));
+      .catch();
   };
 
   return (

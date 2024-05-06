@@ -6,6 +6,7 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../../firebase.config";
+import UseAxiosSecure from "./../custom-hook/UseAxiosSecure";
 export const AuthContext = createContext(null);
 const Provider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -23,22 +24,27 @@ const Provider = ({ children }) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
-
+  const axiosSecure = UseAxiosSecure();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
       auth,
       (user) => {
+        const logedInUser = user?.email;
+        const userEmail = { email: logedInUser };
         if (user) {
           setUser(user);
           setLoading(false);
+          axiosSecure.post("/jwt", userEmail).then();
         } else {
           setUser(null);
           setLoading(false);
+
+          axiosSecure.post("/logout", userEmail).then();
         }
       },
       () => unsubscribe()
     );
-  });
+  }, []);
 
   const AuthObj = {
     user,

@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       {
         path: "/checkOut/:id",
         // loader: ({ params }) => {
-        //   return fetch(`http://localhost:5000/services/${params.id}`);
+        //   return fetch(`https://car-doceor.vercel.app/services/${params.id}`);
         // },
         element: <Checkout></Checkout>,
       },
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
           </Private>
         ),
         loader: ({ params }) => {
-          return fetch(`http://localhost:5000/services/${params.id}`);
+          return fetch(`https://car-doceor.vercel.app/services/${params.id}`);
         },
       },
       {
